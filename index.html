@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Profils Thématiques — Les Cœurs Solitaires — Lili Karantez</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300,400,1,300;1,400&family=Bai+Jamjuree:wght@300;500&display=swap" rel="stylesheet">
+<style>
+:root{--noir:#1a1a1a;--violet-dark:#7D3C98;--fuchsia:#E91E8C;--turquoise:#00BCD4;--blanc:#FAFAFA;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--blanc);color:var(--noir);font-family:"Bai Jamjuree",sans-serif;font-weight:300;line-height:1.7;}
+nav{position:fixed;top:0;left:0;right:0;padding:12px 20px;display:flex;align-items:center;justify-content:center;background:rgba(250,250,250,0.94);backdrop-filter:blur(10px);border-bottom:2px solid var(--violet);z-index:100;}
+.nav-brand{font-size:0.85rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--violet-dark);font-weight:500;}
+.hero{background:linear-gradient(160deg,var(--violet-dark) 0%,var(--fuchsia) 55%,var(--blanc) 100%);padding:110px 20px 70px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M30 10 C35 5 50 5 50 18 C50 30 30 40 30 40 C30 40 10 30 10 18 C10 5 25 5 30 10Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;z-index:0;}
+.hero-eyebrow{font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:16px;position:relative;z-index:1;}
+.hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,5vw,4rem);font-weight:300;color:#fff;line-height:1.1;margin-bottom:16px;position:relative;z-index:1;}
+.hero-sub{font-size:0.9rem;color:rgba(255,255,255,0.85);margin:0 auto;max-width:480px;position:relative;z-index:1;}
+.hero-sub2{font-size:0.85rem;color:rgba(255,255,255,0.65);margin:12px auto 0;max-width:480px;position:relative;z-index:1;}
+
+/* FILTRE EVENEMENT */
+.filtre-section{background:#fff;padding:40px 20px;text-align:center;border-bottom:1px solid rgba(125,60,152,0.15);}
+.filtre-section h2{font-family:"Cormorant Garamond",serif;font-size:1.4rem;color:var(--violet-dark);margin-bottom:8px;}
+.filtre-section p{font-size:0.85rem;color:#666;margin-bottom:20px;}
+.filtre-select-wrap{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;}
+.filtre-select-wrap input[type="text"]{font-family:"Bai Jamjuree",sans-serif;font-size:0.9rem;padding:12px 20px;border:2px solid var(--violet-dark);border-radius:50px;color:var(--violet-dark);background:#fff;outline:none;min-width:280px;text-align:center;}
+.filtre-select-wrap input[type="text"]:focus{border-color:var(--fuchsia);}
+.filtre-select-wrap input[type="text"]::placeholder{color:rgba(125,60,152,0.45);}
+.filtre-error{display:none;color:#e74c3c;font-size:0.82rem;margin-top:8px;}
+
+.bande{background:var(--violet-dark);padding:16px 20px;text-align:center;}
+.bande span{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,0.9);}
+.grid-themes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:960px;margin:0 auto;}
+@media(max-width:600px){.grid-themes{grid-template-columns:1fr;}}
+@media(min-width:601px) and (max-width:900px){.grid-themes{grid-template-columns:repeat(2,1fr);}}
+.theme-card{border-radius:18px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:.2s;box-shadow:.2px .2px 0 rgba(0,0,0,0.08);}
+.theme-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,0.15);}
+.theme-card-header{padding:28px 24px 20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.theme-card-title{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.2rem;color:#fff;line-height:1.2;}
+.theme-icon{width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.theme-card-body{padding:0 24px;}
+.theme-card-desc{font-size:0.84rem;color:rgba(255,255,255,0.7);line-height:1.65;margin-bottom:20px;}
+.theme-card-cta{display:inline-block;background:rgba(255,255,255,0.13);color:#fff;font-family:"Bai Jamjuree",sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:50px;transition:background .2s;margin-bottom:24px;}
+.theme-card:hover .theme-card-cta{background:rgba(255,255,255,0.25);}
+
+/* THEMES CACHES AVANT SELECTION */
+.themes-hidden{display:none;}
+
+.grid-section{background:#fff;padding:56px 20px;text-align:center;}
+.grid-section-intro{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:12px;}
+
+.info-section{max-width:720px;margin:0 auto;padding:56px 20px;}
+.info-section h2{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:2rem;color:var(--violet-dark);margin-bottom:16px;}
+.info-box{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 auto;}
+@media(max-width:520px){.info-box{grid-template-columns:1fr;}}
+.info-item{background:#fff;border:1px solid rgba(125,60,152,0.15);border-radius:12px;padding:20px;}
+.info-item h3{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--fuchsia);margin-bottom:6px;font-weight:500;}
+.info-item p{font-size:0.85rem;color:#555;line-height:1.65;margin:0;}
+
+.events-section{background:linear-gradient(135deg,#7D3C98,#985986);padding:40px 20px;text-align:center;}
+.events-title{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:12px;}
+.events-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:600px;margin:0 auto;}
+.event-card{display:flex;flex-direction:column;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:16px;padding:20px 24px;text-decoration:none;min-width:190px;transition:background .2s;}
+.event-card:hover{background:rgba(255,255,255,0.2);}
+.event-date{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:5px;}
+.event-name{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.1rem;color:#fff;margin-bottom:3px;}
+.event-lieu{font-size:0.75rem;color:rgba(255,255,255,0.75);}
+.event-btn{display:inline-block;background:rgba(255,255,255,0.15);color:#fff;padding:6px 16px;border-radius:50px;font-size:0.75rem;margin-top:8px;transition:background .2s;}
+.event-card:hover .event-btn{background:rgba(255,255,255,0.3);}
+
+footer{background:var(--violet-dark);padding:28px 20px;text-align:center;}
+footer p{font-size:0.74rem;color:rgba(255,255,255,0.6);line-height:1.9;}
+footer strong{color:rgba(255,255,255,0.88);font-weight:500;}
+sup.r{font-size:0.55em;vertical-align:super;}
+
+.rgpd-section{background:#F5F0FF;padding:32px 20px;text-align:center;border-top:1px solid rgba(125,60,152,0.1);}
+.rgpd-section div{max-width:640px;margin:0 auto;}
+.rgpd-section p{font-size:0.78rem;color:rgba(26,26,26,0.7);line-height:1.8;font-style:italic;}
+</style>
+</head>
+<body>
+<nav><span class="nav-brand">Les Cœurs Solitaires</span></nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Les Cœurs Solitaires · Lili Karantez<sup class="r">®</sup></p>
+  <h1>Mes Profils<br><em>Thématiques</em></h1>
+  <p class="hero-sub">Choisissez la ou les thématiques qui vous correspondent.</p>
+  <p class="hero-sub2">Chaque questionnaire révèle un profil unique et permet à Lili Karantez<sup class="r">®</sup> de vous proposer des rencontres qui ont vraiment du sens.</p>
+</section>
+
+<section class="filtre-section">
+  <h2>À quel événement êtes-vous inscrit ?</h2>
+  <div class="filtre-select-wrap">
+    <input type="text" id="select-evenement" placeholder="Nom de l’événement" autocomplete="off">
+  </div>
+  <p class="filtre-error" id="filtre-error">Veuillez indiquer votre événement avant de continuer.</p>
+</section>
+
+<div class="bande">
+  <span>Explorez les thématiques (plusieurs choix possibles selon vos loisirs et passions)</span>
+</div>
+
+<section class="grid-section themes-hidden" id="themes-grid">
+  <div style="max-width:960px;margin:0 auto 0;">
+    <p style="font-size:0.85rem;color:rgba(255,255,255,0.05);line-height:1.6;margin-bottom:12px;">Le parcours court est réservé aux membres ayant déjà rempli un premier formulaire complet. Si ce n’est pas encore le cas, choisissez “Première visite ? Commencer”.</p>
+  </div>
+  <div class="grid-themes">
+    <a href="profil-rando.html" class="theme-card" style="background:linear-gradient(145deg,#1A6B83,#27AE60);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">🥾</span></div>
+        <div class="theme-card-title">Randonnée &amp; Nature</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Sentiers côtiers, landes bretonnes, chemins creux. Pour ceux qui ont besoin de nature pour aller bien.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-danse.html" class="theme-card" style="background:linear-gradient(145deg,#A40235,#E9198C);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">💃</span></div>
+        <div class="theme-card-title">Danse</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Latines, bal, contemporain, folk. Pour ceux qui s’expriment avec leur corps et leur âme.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-voyages.html" class="theme-card" style="background:linear-gradient(145deg,#006978,#008CD4);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">✈️</span></div>
+        <div class="theme-card-title">Voyages &amp; Découvertes</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Montgolfières, sacs à dos, carnets de voyage. Pour ceux qui ont besoin d’horizon.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-nautique.html" class="theme-card" style="background:linear-gradient(145deg,#1A5276,#2980B9);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">⛵</span></div>
+        <div class="theme-card-title">Sports Nautiques</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Voile, surf, kayak, plongée. Pour ceux que la mer appelle.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-culture.html" class="theme-card" style="background:linear-gradient(145deg,#784212,#E67E22);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">📚</span></div>
+        <div class="theme-card-title">Culture &amp; Curiosité</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Livres, musées, cinéma, théâtre. Pour les esprits curieux et les âmes assoi ffées.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-bienetre.html" class="theme-card" style="background:linear-gradient(145deg,#0E6655,#1ABC9C);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">🧘</span></div>
+        <div class="theme-card-title">Bien-Être &amp; Développement</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Yoga, méditation, développement personnel. Pour ceux qui avancent vers eux-mêmes.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-artvivre.html" class="theme-card" style="background:linear-gradient(145deg,#78241C,#C03928);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">☀️</span></div>
+        <div class="theme-card-title">Art de Vivre</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Gastronomie, vins, décoration, artisanat. Pour ceux qui font du quotidien une œuvre.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-plaisirs.html" class="theme-card" style="background:linear-gradient(145deg,#7E5109,#F39C12);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">☕</span></div>
+        <div class="theme-card-title">Petits Plaisirs Simples</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Café du matin, promenades, bons repas. Pour ceux qui savent trouver le bonheur dans peu.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+    <a href="profil-musique.html" class="theme-card" style="background:linear-gradient(145deg,#582C6F,#8E44AD);">
+      <div class="theme-card-header">
+        <div class="theme-icon"><span style="font-size:2rem;line-height:1;">🎵</span></div>
+        <div class="theme-card-title">Musique</div>
+      </div>
+      <div class="theme-card-body">
+        <div class="theme-card-desc">Concerts, instruments, playlists, frissons. Pour ceux dont l’âme vibre au rythme des sons.</div>
+        <span class="theme-card-cta">Commencer ce profil →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="info-section">
+  <h2>Comment ça marche ?</h2>
+  <div class="info-box">
+    <div class="info-item">
+      <h3>Première visite</h3>
+      <p>Remplissez le formulaire complet : votre identité, votre situation, puis les questions thématiques et amoureuses.</p>
+    </div>
+    <div class="info-item">
+      <h3>Deuxième formulaire</h3>
+      <p>Choisissez "J'ai déjà un profil", indiquez votre email, et répondez uniquement aux questions de la nouvelle thématique.</p>
+      <p style="margin-top:8px;font-size:0.74rem;font-style:italic;color:#922221;">Le parcours court est réservé aux membres ayant déjà rempli un premier formulaire complet. Si ce n’est pas encore le cas, choisissez "Première visite ? Commencer".</p>
+    </div>
+    <div class="info-item">
+      <h3>Le profil résultat</h3>
+      <p>À la fin de chaque questionnaire, découvrez votre profil parmi 6 archétypes, avec vos affinités naturelles et vos compatibilités.</p>
+    </div>
+    <div class="info-item">
+      <h3>Le matching de Lili</h3>
+      <p>Lili reçoit votre profil complet et vous propose des mises en relation personnalisées selon vos réponses et votre zone géographique.</p>
+    </div>
+  </div>
+</section>
+
+<section class="events-section">
+  <p class="events-title">Prochains événements</p>
+  <div class="events-grid">
+    <a href="https://yp1.me/PUR" target="_blank" class="event-card">
+      <span class="event-date">6 juin 2026</span>
+      <span class="event-name">Salon de la Rencontre</span>
+      <span class="event-lieu">Vannes — Maison Flow</span>
+      <span class="event-btn">Réserver</span>
+    </a>
+  </div>
+</section>
+
+<section class="rgpd-section">
+  <div>
+    <p>Vos données sont confiées à Lili Karantez, et ne seront jamais vendues, jamais partagées à un tiers. Elles sont conservées entre 1 et 6 mois maximum.<br>
+    Conformément au RGPD, vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Pour exercer ces droits, contactez : <a href="mailto:lilikarantez@gmail.com" style="color:rgba(26,26,26,0.6);">lilikarantez@gmail.com</a><br>
+    Vos données sont collectées uniquement dans le cadre du service de matching et en lien avec les événements matching des Cœurs Solitaires.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Lili Karantez<sup class="r">®</sup> — Les Cœurs Solitaires</strong><br>
+  Centre des Affaires Lorient La Base — 1 rue Étienne d’Orves — 56100 Lorient<br>
+  <a href="mailto:lilikarantez@gmail.com" style="color:rgba(255,255,255,0.6);">lilikarantez@gmail.com</a> — SIRET 40149331700069<br>
+  <em>©2026 Lili Karantez — Toute reproduction interdite, même partielle.</em></p>
+</footer>
+
+<script>
+const selectEvenement = document.getElementById('select-evenement');
+const themesGrid = document.getElementById('themes-grid');
+const filtreError = document.getElementById('filtre-error');
+const themeLinks = themesGrid.querySelectorAll('a.theme-card');
+
+selectEvenement.addEventListener('input', function() {
+  const val = this.value.trim();
+  if (val) {
+    filtreError.style.display = 'none';
+    themesGrid.classList.remove('themes-hidden');
+    themeLinks.forEach(function(link) {
+      const base = link.getAttribute('href').split('?')[0];
+      link.setAttribute('href', base + '?evenement=' + encodeURIComponent(val));
+    });
+  } else {
+    themesGrid.classList.add('themes-hidden');
+  }
+});
+
+themeLinks.forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    if (!selectEvenement.value) {
+      e.preventDefault();
+      filtreError.style.display = 'block';
+      selectEvenement.focus();
+    }
+  });
+});
+</script>
+</body>
+</html>
